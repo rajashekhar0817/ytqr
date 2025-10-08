@@ -1,13 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta http-equiv="refresh" content="0; url=https://www.youtube.com/watch?v=J59nhzw8_Yk" />
+    <meta charset="UTF-8" />
+    <title>Redirecting...</title>
     <script>
-      // Backup redirect (in case meta tag fails)
-      window.location.href = "https://www.youtube.com/watch?v=J59nhzw8_Yk";
+      async function redirectToLatest() {
+        try {
+          const response = await fetch("config.json?cachebust=" + Date.now());
+          const data = await response.json();
+          if (data && data.video_url) {
+            window.location.href = data.video_url;
+          } else {
+            document.body.innerText = "No video URL found in config.json";
+          }
+        } catch (e) {
+          document.body.innerText = "Error loading redirect link.";
+        }
+      }
+      redirectToLatest();
     </script>
   </head>
   <body>
-    <p>Redirecting to the latest video...</p>
+    <p>Redirecting to latest video...</p>
   </body>
 </html>
